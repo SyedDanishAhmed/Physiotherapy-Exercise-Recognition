@@ -123,32 +123,35 @@ Each observation in the dataset contains acceleration values corresponding to 1/
 Overlapping becomes important if the signals in each interval are not independent from the other intervals. If the windows are not overlapping, we will be missing any information at the boundary of the windows.
 
 #### Windowing Process Steps
-Here we are using a window length of 4 seconds and an overlap of 1 second
-•	Take all rows from t = 0 to t = 4. Since the sampling frequency is 100 Hz, 100 rows have data for 1 second and thus 400 hundred rows will have data for 4 seconds
-•	Thus, we now have 400 rows for each of the three features - acceleration in x, y and z direction in a single window
-•	To convert this window into a single row, we will append the 400 rows of data from each of the x, y and z columns into one single row
-•	So, the three features (acceleration in x, y and z direction) and 400 rows each are now converted to 400 * 3 = 1200 features in just 1 row
+Here we are using a window length of 4 seconds and an overlap of 1 second  
+•	Take all rows from t = 0 to t = 4. Since the sampling frequency is 100 Hz, 100 rows have data for 1 second and thus 400 hundred rows will have data for 4 seconds  
+•	Thus, we now have 400 rows for each of the three features - acceleration in x, y and z direction in a single window  
+•	To convert this window into a single row, we will append the 400 rows of data from each of the x, y and z columns into one single row 
+•	So, the three features (acceleration in x, y and z direction) and 400 rows each are now converted to 400 * 3 = 1200 features in just 1 row  
 
 #### Overlap Process Steps
-•	Overlap just ensures that two consecutive windows have a 1 second data overlap
-•	For example, after implementing windowing with overlap, the first window will have data from t = 0 to t = 4, and the second window will have data from t = 4 to t = 7 and so on
-Process for determining the Window Length and Overlap Length
-•	The optimal combination of window length and overlap length was obtained by trying out multiple different combinations using LOOCV on SVM model with AUC metric
-•	The different combinations to be tried out were determined by looking at benchmarked numbers from other Human Activity and Exercise Recognition problems
-•	The combination that gave the highest SVM model AUC was selected
-•	SVM was selected here over other models because of its high execution speed
-•	The optimal window and overlap length was found to be 4 seconds and 1 second respectively
+•	Overlap just ensures that two consecutive windows have a 1 second data overlap  
+•	For example, after implementing windowing with overlap, the first window will have data from t = 0 to t = 4, and the second window will have data from t = 4 to t = 7 and so on  
+
+Process for determining the Window Length and Overlap Length  
+•	The optimal combination of window length and overlap length was obtained by trying out multiple different combinations using LOOCV on SVM model with AUC metric  
+•	The different combinations to be tried out were determined by looking at benchmarked numbers from other Human Activity and Exercise Recognition problems  
+•	The combination that gave the highest SVM model AUC was selected  
+•	SVM was selected here over other models because of its high execution speed  
+•	The optimal window and overlap length was found to be 4 seconds and 1 second respectively  
 
 
 
 ## Feature Transformation and Selection
 
-Now that we have 1200 features to work with, we will look at how we take transform them and then select the most important features.
-Feature Transformation – Discrete Cosine Transform
-The idea behind DCT is to convert the data in the spatial domain into a frequency domain for better feature representation. DCT expresses a finite sequence of data points in terms of a sum of cosine functions oscillating at different frequencies.
-How was DCT applied 
-•	DCT does not change the dimensions of the data by itself, it just transforms all values to frequency domain and returns output data which has the same dimensions as the input data
-•	DCT was applied during the windowing process, and not after windowing. This is because DCT is to be applied to each of x, y and z columns separately
+Now that we have 1200 features to work with, we will look at how we take transform them and then select the most important features.  
+
+**Feature Transformation – Discrete Cosine Transform**  
+The idea behind DCT is to convert the data in the spatial domain into a frequency domain for better feature representation. DCT expresses a finite sequence of data points in terms of a sum of cosine functions oscillating at different frequencies.  
+
+How was DCT applied  
+•	DCT does not change the dimensions of the data by itself, it just transforms all values to frequency domain and returns output data which has the same dimensions as the input data  
+•	DCT was applied during the windowing process, and not after windowing. This is because DCT is to be applied to each of x, y and z columns separately  
 
 ### Why DCT and how is it similar to PCA
 An important property of DCT is that the DCT coefficients are ordered based on frequencies where initial frequencies encode more information. PCA also has a similar property where it returns principal components which are ordered based on the amount of variance they capture where the initial principal components encode more information or variance.
@@ -164,33 +167,37 @@ The possible optimum thresholds were verified using LOOCV on SVM model with AUC 
 The optimum threshold was found to be 100, thus for each axes x, y and z we will retain the first 100 features out of 400 and after appending the x, y and z coefficients in the same row, we get 100 * 3 = 300 features. So the dimensionality has now reduced from 1200 to 300.
 
 ### Feature Importance – Why didn’t we use SVM Coefficients
-Though SVM model with ‘linear’ kernel gives out coefficients which can be used for determining feature importance, but we could not use them here because of the reason stated below,
-•	SVM is originally a binary class classifier and uses one-versus-rest approach for multiclass classification. Hence the model coefficients it gives are for each class. So for 1200 features, there are 1200 * 7 = 8,400 coefficients
+Though SVM model with ‘linear’ kernel gives out coefficients which can be used for determining feature importance, but we could not use them here because of the reason stated below,  
+•	SVM is originally a binary class classifier and uses one-versus-rest approach for multiclass classification. Hence the model coefficients it gives are for each class. So for 1200 features, there are 1200 * 7 = 8,400 coefficients  
 •	Thus, inferring the optimal number of coefficients using the SVM model coefficients is quite tedious 
 
 ## Model Selection
-The factors given below were considered for selecting the algorithms for this problem,
-•	Based on the exploratory data analysis, we can infer that the data is not expected to form distinct clusters, hence, we will use a supervised learning algorithm because we also have the output labels available to us
-•	Since the classes are not linearly separable, we would need a classifier that can have non-linear decision boundaries
-•	The prediction time should preferably be low to enable faster prediction. We would thus prefer parametric models which compute the model parameters during training and then use those pre-computed parameters during prediction. Non-parametric model like kNN will have a higher prediction time 
-•	Since we need a scoring mechanism for assessing the quality of exercises, we would need an algorithm that gives probability scores as output to enable self-monitoring
-Based on the criteria listed in the previous slide, as well as a research on the existing methods for Human Activity Recognition, the given algorithms were selected.
+The factors given below were considered for selecting the algorithms for this problem,  
+•	Based on the exploratory data analysis, we can infer that the data is not expected to form distinct clusters, hence, we will use a supervised learning algorithm because we also have the output labels available to us  
+•	Since the classes are not linearly separable, we would need a classifier that can have non-linear decision boundaries  
+•	The prediction time should preferably be low to enable faster prediction. We would thus prefer parametric models which compute the model parameters during training and then use those pre-computed parameters during prediction. Non-parametric model like kNN will have a higher prediction time  
+•	Since we need a scoring mechanism for assessing the quality of exercises, we would need an algorithm that gives probability scores as output to enable self-monitoring  
+
+Based on the criteria listed in the previous slide, as well as a research on the existing methods for Human Activity Recognition, the given algorithms were selected  
 
 
 
 ### Support Vector Machines
 Activity data has a special property – focusing on the key poses, which can capture the essence of an action class, even if there is variance in execution styles of the same. SVM uses this property to learn to classify activities or exercises, in a discriminative feature space.
-SVM performs classification using linear decision hyperplanes in the feature space. During training, the hyperplanes are calculated to separate the training data with different labels. If the training data are not linearly separable, a kernel function is used to transform the data into a new space. The data have to linearly separable in the new vector space. SVMs scale well for very large training sets and perform well with accurate results cost effectively. 
-•	The main purpose of using SVM is to set up a benchmark that can be used to compare other models
-•	SVM allows for faster iterations and thus makes it easier to tune the windowing and DCT hyperparameters
-•	We can use SVM’s Radial Basis Function (RBF) kernel to get non-linear decision boundaries 
+SVM performs classification using linear decision hyperplanes in the feature space. During training, the hyperplanes are calculated to separate the training data with different labels. If the training data are not linearly separable, a kernel function is used to transform the data into a new space. The data have to linearly separable in the new vector space. SVMs scale well for very large training sets and perform well with accurate results cost effectively.  
+
+•	The main purpose of using SVM is to set up a benchmark that can be used to compare other models  
+•	SVM allows for faster iterations and thus makes it easier to tune the windowing and DCT hyperparameters  
+•	We can use SVM’s Radial Basis Function (RBF) kernel to get non-linear decision boundaries  
 
 ### 1D CNN
 Research has shown that using CNNs for time series classification has several important advantages over other methods. They are highly noise-resistant models, and they are able to extract very informative, deep features, which are independent from time.
-The convolution kernels always have the same width as the time series, while their length can be varied. This way, the kernel moves in one direction from the beginning of a time series towards its end, performing convolution. It does not move to the left or to the right as it does when the usual 2-D convolution is applied to images.
+The convolution kernels always have the same width as the time series, while their length can be varied. This way, the kernel moves in one direction from the beginning of a time series towards its end, performing convolution. It does not move to the left or to the right as it does when the usual 2-D convolution is applied to images.  
+
 Moreover, There are multiple advantages of using an adaptive and compact 1D CNN instead of a conventional (2D) counterparts
-•	1D CNNs can be efficiently trained with a limited dataset of 1D signals while the 2D deep CNNs, besides requiring 1D to 2D data transformation, usually need datasets with massive size
-•	Due to the simple and compact configuration of 1D CNNs that perform only linear 1D convolutions (scalar multiplications and additions), a real-time implementation is feasible
+•	1D CNNs can be efficiently trained with a limited dataset of 1D signals while the 2D deep CNNs, besides requiring 1D to 2D data transformation, usually need datasets with massive size  
+•	Due to the simple and compact configuration of 1D CNNs that perform only linear 1D convolutions (scalar multiplications and additions), a real-time implementation is feasible  
+
 The convolution is performed as a sliding window, where the feature convolves over a local region of the data and produces an output, which then becomes the input of the next layer. Once the feature maps are computed, a nonlinear activation function is applied, such as softmax.
 
 
@@ -204,10 +211,10 @@ Since this is an exercise recognition problem, the True Positives are as importa
 The reason behind using LOOCV is to make sure that the algorithm is being validated on multiple samples of data. If validation is done on only one sample, they we can not be sure whether the results will hold good on other samples. 
 In LOOCV, we will use the data of 29 subjects for training and 1 subject for validation, and repaeat this process for all subjects one by one.
 
-Notes:
-•	The average values of Accuracy, F1 Score and AUC across the folds of LOOCV are being reported below
-•	The Confusion Matrix and ROC curve have been created by training on 25 subjects and validating on 5 subjects
-•	We are not using a ‘test’ dataset per se as we have very limited available training data
+Notes:  
+•	The average values of Accuracy, F1 Score and AUC across the folds of LOOCV are being reported below  
+•	The Confusion Matrix and ROC curve have been created by training on 25 subjects and validating on 5 subjects  
+•	We are not using a ‘test’ dataset per se as we have very limited available training data  
 
 ### Model Evaluation Results
 
@@ -270,28 +277,3 @@ We can see that the Osteoarthritis Exercise Recognition model is performing bett
 •	The most surprising part was the increase in accuracy achieved due to DCT transformations
 •	Building the CNN and LSTM models was surprisingly not that difficult as they were able to achieve high AUC with very small and simple architectures
 •	If I were to do the project again, I would try to improve one model before jumping on to the next to avoid rework. However, there is a trade-off between the amount of time can be spent on one model and the number of models that can be experimented with. A good approach would be look at benchmark numbers beforehand so that it’s easier to understand whether model hyperparameter tuning can reach those results or there are issues with the feature representation itself, as feature representation cause drastic changes in accuracy whereas model hyperparameter tuning generally does not affect the performance much especially in classification models 
-
-## References
-•	https://www.researchgate.net/publication/261480718_Faster_human_activity_recognition_with_SVM/
-•	https://europepmc.org/article/PMC/6480090
-•	https://dsp.stackexchange.com/questions/7859/relationship-between-dct-and-pca
-•	https://ieeexplore.ieee.org/document/8682194
-•	https://towardsdatascience.com/how-to-use-convolutional-neural-networks-for-time-series-classification-56b1b0a07a57
-•	https://machinelearningmastery.com/how-to-load-and-explore-a-standard-human-activity-recognition-problem/
-•	https://machinelearningmastery.com/how-to-model-human-activity-from-smartphone-data/
-•	https://stackoverflow.com/questions/14524322/how-to-convert-a-date-string-to-different-format
-•	https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
-•	https://www.dlology.com/blog/simple-guide-on-how-to-generate-roc-plot-for-keras-classifier/
-•	https://androidkt.com/get-the-roc-curve-and-auc-for-keras-model/
-•	https://physiotherapy.ca/sites/default/files/valuePT/cpa_valuept_musculoskeletal-en.pdf
-•	https://ergo-plus.com/musculoskeletal-disorders-msd/
-•	https://www.clipartkey.com/view/
-•	https://www.mathworks.com/help/dsp/ref/dsp.stft.html
-•	https://www.mdpi.com/1424-8220/18/2/679
-•	https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf
-•	https://ieeexplore.ieee.org/document/8260796
-•	https://medium.com/smileinnovation/how-to-work-with-time-distributed-data-in-a-neural-network-b8b39aa4ce00
-•	https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node231.html
-•	https://stats.stackexchange.com/questions/25142/how-to-select-discrete-cosine-transform-coefficients-as-a-feature-vector
-•	http://cs229.stanford.edu/proj2019aut/data/assignment_308875_raw/26487946.pdf
-•	https://www.frontiersin.org/articles/10.3389/frobt.2015.00028/full
