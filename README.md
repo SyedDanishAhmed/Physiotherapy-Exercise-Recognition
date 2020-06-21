@@ -56,7 +56,9 @@ The 4 columns in the act and acw files is organized as follows:
 4. z value: Acceleration (in m/s2) in z direction  
 
 ### Data Sample
-Below is a small sample of the actual data to get a better sense of what it looks like.
+Below is a small sample of the actual data to get a better sense of what it looks like.  
+
+![](www/dataset.png)
 
 ## Exercises
 
