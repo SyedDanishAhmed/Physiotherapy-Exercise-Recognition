@@ -8,7 +8,7 @@ Musculoskeletal Disorders or MSDs are injuries and disorders that affect the hum
 
 ### Impact of MSDs
 
-Following are several statistics which indicate the impact of MSDs
+Following are several statistics which indicate the impact of MSDs  
 •	MSDs are the single largest category of workplace injuries and are responsible for almost 30% of all worker’s compensation costs  
 •	U.S. companies spent 50 billion dollars on direct costs of MSDs  
 •	Indirect costs can be up to five times the direct costs of MSDs  
