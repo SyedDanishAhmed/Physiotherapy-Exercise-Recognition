@@ -9,10 +9,10 @@ Musculoskeletal Disorders or MSDs are injuries and disorders that affect the hum
 ### Impact of MSDs
 
 Following are several statistics which indicate the impact of MSDs
-•	MSDs are the single largest category of workplace injuries and are responsible for almost 30% of all worker’s compensation costs
-•	U.S. companies spent 50 billion dollars on direct costs of MSDs
-•	Indirect costs can be up to five times the direct costs of MSDs
-•	The average MSD comes with a direct cost of almost $15,000
+•	MSDs are the single largest category of workplace injuries and are responsible for almost 30% of all worker’s compensation costs  
+•	U.S. companies spent 50 billion dollars on direct costs of MSDs  
+•	Indirect costs can be up to five times the direct costs of MSDs  
+•	The average MSD comes with a direct cost of almost $15,000  
 
 ### How does physiotherapy helps with MSDs
 Physiotherapy exercises can help reduce the symptoms of musculoskeletal conditions. It contributes to improved physical function, allowing individuals to return to healthy living, including return to work and recreational activities. It also promotes recovery from injury, reduces the risk of re-injury and enables early detection of acute events.
