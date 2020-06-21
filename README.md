@@ -107,14 +107,22 @@ Action: Extend right arm straight in front of you & left leg straight behind you
 Raw Data - Thigh Accelerometer
 
 Following are the plots from the data collected through the thigh accelerometer for one subject.
-The x axis denotes the observation number and the y axis denotes the acceleration (in m/s2). The red, green and blue lines indicate the acceleration values in the x, y and z direction.
+The x axis denotes the observation number and the y axis denotes the acceleration (in m/s2). The red, green and blue lines indicate the acceleration values in the x, y and z direction.  
+
+![](www/ex1.png)
+![](www/ex2.png)
+![](www/ex3.png)
+![](www/ex4.png)
+![](www/ex5.png)
+![](www/ex6.png)
+![](www/ex7.png)
 
 
 Outlier Analysis
 
-The plots below show boxplots for each of the 7 exercises (labelled 1 to 7 on the x axis) and for each of the axes – x, y and z (blue, orange and green). The y-axis is the acceleration value (in m/s2).
+The plots below show boxplots for each of the 7 exercises (labelled 1 to 7 on the x axis) and for each of the axes – x, y and z (blue, orange and green). The y-axis is the acceleration value (in m/s2).  
 
-Thigh Accelerometer – Boxplot 
+![](www/boxplot.png)
   
 
 ## Feature Engineering
