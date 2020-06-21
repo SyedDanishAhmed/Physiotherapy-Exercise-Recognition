@@ -104,7 +104,7 @@ Action: Extend right arm straight in front of you & left leg straight behind you
 
 ## Data Exploration
 
-Raw Data - Thigh Accelerometer
+### Raw Data - Thigh Accelerometer
 
 Following are the plots from the data collected through the thigh accelerometer for one subject.
 The x axis denotes the observation number and the y axis denotes the acceleration (in m/s2). The red, green and blue lines indicate the acceleration values in the x, y and z direction.  
@@ -118,7 +118,7 @@ The x axis denotes the observation number and the y axis denotes the acceleratio
 ![](www/ex7.png)
 
 
-Outlier Analysis
+### Outlier Analysis
 
 The plots below show boxplots for each of the 7 exercises (labelled 1 to 7 on the x axis) and for each of the axes – x, y and z (blue, orange and green). The y-axis is the acceleration value (in m/s2).  
 
@@ -208,9 +208,9 @@ SVM performs classification using linear decision hyperplanes in the feature spa
 Research has shown that using CNNs for time series classification has several important advantages over other methods. They are highly noise-resistant models, and they are able to extract very informative, deep features, which are independent from time.
 The convolution kernels always have the same width as the time series, while their length can be varied. This way, the kernel moves in one direction from the beginning of a time series towards its end, performing convolution. It does not move to the left or to the right as it does when the usual 2-D convolution is applied to images.  
 
-Moreover, There are multiple advantages of using an adaptive and compact 1D CNN instead of a conventional (2D) counterparts
+Moreover, There are multiple advantages of using an adaptive and compact 1D CNN instead of a conventional (2D) counterparts  
 •	1D CNNs can be efficiently trained with a limited dataset of 1D signals while the 2D deep CNNs, besides requiring 1D to 2D data transformation, usually need datasets with massive size  
-•	Due to the simple and compact configuration of 1D CNNs that perform only linear 1D convolutions (scalar multiplications and additions), a real-time implementation is feasible  
+•	Due to the simple and compact configuration of 1D CNNs that perform only linear 1D convolutions (scalar multiplications and additions), a real-time implementation is feasible   
 
 The convolution is performed as a sliding window, where the feature convolves over a local region of the data and produces an output, which then becomes the input of the next layer. Once the feature maps are computed, a nonlinear activation function is applied, such as softmax.
 
