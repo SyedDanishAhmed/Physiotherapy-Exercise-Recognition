@@ -130,7 +130,9 @@ The plots below show boxplots for each of the 7 exercises (labelled 1 to 7 on th
 ### Feature Engineering – Windowing with overlap
  
 Each observation in the dataset contains acceleration values corresponding to 1/100th second of exercise because the sampling frequency of the accelerometer is 100 Hz. This timeframe is too small to capture any significant movement (during exercise). We would thus like to aggregate multiple observations in a single window to be able to capture some movement in each window/observation. 
-Overlapping becomes important if the signals in each interval are not independent from the other intervals. If the windows are not overlapping, we will be missing any information at the boundary of the windows.
+Overlapping becomes important if the signals in each interval are not independent from the other intervals. If the windows are not overlapping, we will be missing any information at the boundary of the windows.  
+
+![](www/windowing.png)
 
 #### Windowing Process Steps
 Here we are using a window length of 4 seconds and an overlap of 1 second  
@@ -169,6 +171,8 @@ We can thus use DCT for feature selection, that is, retain only those features t
 
 ### Feature Importance – Selecting the optimal number of DCT Coefficients 
 The optimal number of DCT features was obtained by plotting the DCT coefficients for each of the axes. We know that DCT orders the features based on frequencies such that the lower frequencies encode more information. Thus, the idea here is to find out the threshold where the frequency starts to increase and discard the high frequency features. We plotted DCT coefficients multiple times with different maximum number of coefficients to get a sense of the optimum threshold.  
+
+![](www/dct.png)
  
 Here the y axis is the coefficients for first 200 features (DCT on acceleration values) and the x axis has the magnitude for frequencies.
 
@@ -218,8 +222,9 @@ A combination for CNN and LSTM thus allows for better feature representation alo
 
 ### Model Evaluation
 Since this is an exercise recognition problem, the True Positives are as important as the True Negatives. The strategy for evaluation is to use Leave-one-out cross validation and compute the Area Under the Curve as well as the Confusion Matrix. 
-The reason behind using LOOCV is to make sure that the algorithm is being validated on multiple samples of data. If validation is done on only one sample, they we can not be sure whether the results will hold good on other samples. 
-In LOOCV, we will use the data of 29 subjects for training and 1 subject for validation, and repaeat this process for all subjects one by one.
+The reason behind using LOOCV is to make sure that the algorithm is being validated on multiple samples of data. If validation is done on only one sample, they we can not be sure whether the results will hold good on other samples.  
+
+In LOOCV, we will use the data of 29 subjects for training and 1 subject for validation, and repeat this process for all subjects one by one.
 
 Notes:  
 •	The average values of Accuracy, F1 Score and AUC across the folds of LOOCV are being reported below  
@@ -235,7 +240,11 @@ Accuracy: 82.4%, F1 Score: 81.8%, AUC: 96.3%
 Accuracy: 85.5%, F1 Score: 86.1%, AUC: 97.1%
 
 **Hybrid 1D CNN & LSTM**
-Accuracy: 86.0%, F1 Score: 86.3%, AUC: 97.5%
+Accuracy: 86.0%, F1 Score: 86.3%, AUC: 97.5%  
+
+![](www/roc.png)  
+
+![](www/confusion.png)
 
 ### Model Evaluation - Conclusions
 We can see that Hybrid 1D CNN & LSTM outperforms all the other models as it has the highest AUC. It is also clear that Exercise 2 and 3 have higher number of misclassification when compared to other exercises across the three algorithms.
@@ -245,45 +254,58 @@ When we look at the thigh accelerometer raw data line plots for exercises 2 & 3,
 Potential Next Step: We see that the wrist accelerometer raw data line plots for exercises 2 & 3 are quite different. A next step can be to try out using this data just for exercise 2 & 3 and use the thigh acceleromater data for the remaining exercises. 
 
 ### Prediction Runtime
-Below are the prediction runtimes for the three models. 
-Model	SVM	1D CNN	1D CNN with LSTM 
-Prediction Time (in seconds)	1.4	0.5	2.4
+Below are the prediction runtimes for the three models.  
+
+![](www/time.png)
 
 We can see that there is a significant difference of around 2 seconds between the predcition time for 1D CNN and Hybrid 1D CNN with LSTM models. 
 Note: We are concerned only about the prediction time and not the training time because we are assuming that an exercise recognition app will already have a trained model in place and it will just use those parameters to predict the test samples.
 
 
 ## Benchmarking the model
-We will now compare our best model with another similar model for exercise recognition.
-Purpose: Exercise Recognition for Knee Osteoarthritis
-Data Collection Method: This study develops a rehabilitation exercise assessment mechanism using three wearable sensors mounted on the chest, thigh and shank of the working leg in order to enable the patients with knee osteoarthritis to manage their own rehabilitation progress
-Features: In this work, time-domain, frequency-domain features and angle information of the motion sensor signals are used to classify the exercise type and identify whether their postures are proper or not
-Target Classes: Three types of rehabilitation exercise commonly prescribed to knee osteoarthritis patients are: Short-Arc Exercise, Straight Leg Raise, and Quadriceps Strengthening Mini-squats  
-Number of subjects: 10
-Overall exercise recognition accuracy: 97.29%
-LOOCV Results:
+We will now compare our best model with another similar model for exercise recognition.  
+
+Purpose: Exercise Recognition for Knee Osteoarthritis  
+
+Data Collection Method: This study develops a rehabilitation exercise assessment mechanism using three wearable sensors mounted on the chest, thigh and shank of the working leg in order to enable the patients with knee osteoarthritis to manage their own rehabilitation progress  
+
+Features: In this work, time-domain, frequency-domain features and angle information of the motion sensor signals are used to classify the exercise type and identify whether their postures are proper or not  
+
+Target Classes: Three types of rehabilitation exercise commonly prescribed to knee osteoarthritis patients are: Short-Arc Exercise, Straight Leg Raise, and Quadriceps Strengthening Mini-squats    
+
+Number of subjects: 10  
+
+Overall exercise recognition accuracy: 97.29%  
+
+LOOCV Results:  
+
+![](www/benchmark.png)
  
 Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4367405/
 We can see that the Osteoarthritis Exercise Recognition model is performing better than our model as it has higher accuracy rates. The possible reasons for this are availability of better features, lesser number of target classes or better model parameter tuning.
 
 
-## Quality Assessment
-•	The probabilities obtained through the ‘softmax’ activation function can be used to assess the quality of exercise
-•	These probabilites can be bucketed into different classes in increasing levels of quality in order to improve user readability 
+## Quality Assessment  
 
-## Recommendations
-•	Based on the model evaluation metrics obtained in the previous step, we can see that LSTM model has the highest AUC
-•	Though 1D CNN model has slightly lower predictive performance compared to LSTM, its speed of execution is higher 
-•	We can thus trade off the small predictive performance gain for a higher speed of execution and select 1D CNN as the final model in order to enable real time feedback
+•	The probabilities obtained through the ‘softmax’ activation function can be used to assess the quality of exercise  
+•	These probabilites can be bucketed into different classes in increasing levels of quality in order to improve user readability  
 
-## Next Steps
-•	The next step could be to look at stacking, ensemble modelling, multi-modal algorithms which can leverage data from the accelerators, pressure mat and depth camera
-•	Since exercise 2 & 3 have low recognition rate, try out using wrist accelerometer data for these two exercises and using the thigh acceleromater data for the remaining exercises
-•	The algorithm can also be improved by enhancing the dataset by adding more subjects
+## Recommendations  
 
-## Lessons Learned
-•	The most important takeaway from the project was learning about the importance of feature engineering and transformations for creating a better model 
-•	The hardest part of the project was understanding the concept and implementation of windowing with overlap as it was tricky to visualize
-•	The most surprising part was the increase in accuracy achieved due to DCT transformations
-•	Building the CNN and LSTM models was surprisingly not that difficult as they were able to achieve high AUC with very small and simple architectures
+•	Based on the model evaluation metrics obtained in the previous step, we can see that LSTM model has the highest AUC  
+•	Though 1D CNN model has slightly lower predictive performance compared to LSTM, its speed of execution is higher  
+•	We can thus trade off the small predictive performance gain for a higher speed of execution and select 1D CNN as the final model in order to enable real time feedback  
+
+## Next Steps  
+
+•	The next step could be to look at stacking, ensemble modelling, multi-modal algorithms which can leverage data from the accelerators, pressure mat and depth camera  
+•	Since exercise 2 & 3 have low recognition rate, try out using wrist accelerometer data for these two exercises and using the thigh acceleromater data for the remaining exercises  
+•	The algorithm can also be improved by enhancing the dataset by adding more subjects  
+
+## Lessons Learned  
+
+•	The most important takeaway from the project was learning about the importance of feature engineering and transformations for creating a better model  
+•	The hardest part of the project was understanding the concept and implementation of windowing with overlap as it was tricky to visualize  
+•	The most surprising part was the increase in accuracy achieved due to DCT transformations  
+•	Building the CNN and LSTM models was surprisingly not that difficult as they were able to achieve high AUC with very small and simple architectures  
 •	If I were to do the project again, I would try to improve one model before jumping on to the next to avoid rework. However, there is a trade-off between the amount of time can be spent on one model and the number of models that can be experimented with. A good approach would be look at benchmark numbers beforehand so that it’s easier to understand whether model hyperparameter tuning can reach those results or there are issues with the feature representation itself, as feature representation cause drastic changes in accuracy whereas model hyperparameter tuning generally does not affect the performance much especially in classification models 
