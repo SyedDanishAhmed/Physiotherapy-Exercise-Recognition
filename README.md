@@ -19,18 +19,18 @@ Physiotherapy exercises can help reduce the symptoms of musculoskeletal conditio
 
 ## Problem Statement
 
-The problem statement for defining the scope of this project is as follows,
+The problem statement for defining the scope of this project is as follows,  
 
-•	Develop models for physiotherapy exercise recognition to aid in prevention or self-management of Musculoskeletal Disorders
+•	Develop models for physiotherapy exercise recognition to aid in prevention or self-management of Musculoskeletal Disorders  
 •	Create a scoring mechanism for assessing the quality of exercises to enable self-monitoring without expert supervision 
 
 ## Why this problem was selected
 
-Finding technological solutions for prevention or self-management of MSD is an important problem to solve. This problem was selected because of the reason below,
-•	The proposed model has important applications in real-time digital feedback systems
-•	The market presently has a few physiotherapy exercise recognition apps but not specifically for MSDs
-•	The solution and learnings gathered here can be applied to different kinds of Human Activity Recognition problems
-•	From a Machine Learning problem perspective, this is an interesting problem to solve as exercise recognition involves predictive modelling using spatial data with a temporal aspect attached to it 
+Finding technological solutions for prevention or self-management of MSD is an important problem to solve. This problem was selected because of the reason below,  
+•	The proposed model has important applications in real-time digital feedback systems  
+•	The market presently has a few physiotherapy exercise recognition apps but not specifically for MSDs  
+•	The solution and learnings gathered here can be applied to different kinds of Human Activity Recognition problems  
+•	From a Machine Learning problem perspective, this is an interesting problem to solve as exercise recognition involves predictive modelling using spatial data with a temporal aspect attached to it  
 
 ## Input Data
 Exercises dataset contains multi-sensor data corresponding to 7 exercises performed by 30 subjects.
@@ -49,30 +49,14 @@ The data folder has four folders, one each for four different sensors. Inside ea
 Note: For this project we are considering the data only from the accelerators, that is, ‘act’ & ‘acw’ folders. And considering just one file for exercise 4 to have a consistent data format across exercises. 
 
 ### Data Attributes Information
-The 4 columns in the act and acw files is organized as follows:
-1. timestamp: Time at which each row was recorded by the accelerator
-2. x value: Acceleration (in m/s2) in x direction
-3. y value: Acceleration (in m/s2) in y direction
-4. z value: Acceleration (in m/s2) in z direction
+The 4 columns in the act and acw files is organized as follows:  
+1. timestamp: Time at which each row was recorded by the accelerator  
+2. x value: Acceleration (in m/s2) in x direction  
+3. y value: Acceleration (in m/s2) in y direction  
+4. z value: Acceleration (in m/s2) in z direction  
 
 ### Data Sample
 Below is a small sample of the actual data to get a better sense of what it looks like.
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Exercises
 
