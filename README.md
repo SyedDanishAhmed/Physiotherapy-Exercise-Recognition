@@ -1,4 +1,4 @@
-# Physiotherapy-Exercise-Recognition
+# Physiotherapy Exercise Recognition & Quality Assessment
 Musculoskeletal Disorder physiotherapy exercise recognition & quality assessment using sensor data from accelerometers.
 
 ## Problem Context & Importance
